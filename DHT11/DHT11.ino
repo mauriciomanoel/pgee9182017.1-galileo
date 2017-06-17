@@ -6,6 +6,7 @@
 DHT dht(DHTPIN, DHTTYPE);
 
 String comando, temperatura, umidade;
+const char* cmd;
 void setup() 
 {
   Serial.begin(9600);
@@ -23,7 +24,9 @@ void loop()
   {
     Serial.println("Falha ao ler o sensor ");
     
-    comando = "python /home/pi/create_html_dht11.py nok"; // String com o comando para execução no system
+    comando = "python /home/pi/create_html_dht11.py nok 0 0 > /dev/ttyGS0"; // String com o comando para execução no system
+    cmd = comando.c_str(); // convertendo os dados para contante char;
+    //system(comando);
     Serial.println(comando);
     delay(2000); //Delay de dois segundos entre as leituras da informação
   } 
@@ -39,9 +42,10 @@ void loop()
     Serial.print(h);
     Serial.println("%  ");
     
-    comando = "python /home/pi/create_html_dht11.py ok " + temperatura + " " + umidade; // String com o comando para execução no system
-    Serial.println(comando);
-    
+    comando = "python /home/pi/create_html_dht11.py ok " + temperatura + " " + umidade + " > /dev/ttyGS0"; // String com o comando para execução no system    
+    cmd = comando.c_str(); // convertendo os dados para contante char;
+    //system(comando);
+    Serial.println(cmd);
     delay(2000); //Delay de dois segundos entre as leituras da informação
   }
 }
