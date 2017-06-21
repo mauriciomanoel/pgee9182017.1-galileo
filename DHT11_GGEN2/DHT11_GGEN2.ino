@@ -13,6 +13,9 @@
 
 DHT dht(DHTIN,DHTOUT, DHTTYPE);
 
+String comando, temperatura, umidade;
+const char* cmd;
+
 void setup() {
  Serial.begin(9600); 
  Serial.println("Teste DHT11");
@@ -21,36 +24,33 @@ void setup() {
 }
 
 void loop() {
- // Aguardando um segundo para medição.
- delay(2000);
+  // Aguardando um segundo para medição.
+  delay(1000);
 
- // O tempo de leitura para temperatura ou umidade leva cerca de 250 milissegundos!
- // As leituras do sensor também podem ter até 2 segundos (é um sensor muito lento)
- float h = dht.readHumidity();
- // Read temperature as Celsius
- float t = dht.readTemperature();
- // Read temperature as Fahrenheit
- float f = dht.readTemperature(true);
- 
- // Check if any reads failed and exit early (to try again).
- if (isnan(h) || isnan(t) || isnan(f)) {
- Serial.println("Failed to read from DHT sensor!");
- return;
- }
+  // O tempo de leitura para temperatura ou umidade leva cerca de 250 milissegundos!  
+  float h = dht.readHumidity(); // leitura da humidade  
+  float t = dht.readTemperature(); // leitura da temperatura em celsius (Para F, passar como parâmetro true);
 
- // Compute heat index
- // Must send in temp in Fahrenheit!
- float hi = dht.computeHeatIndex(f, h);
+  //temperatura = String(t);
+  //umidade = String(h);
+  temperatura = String('t, 2');
+  umidade = String('h, 2');
+    
+  // Check if any reads failed and exit early (to try again).
+  if (isnan(h) || isnan(t)) {
+    Serial.println("Falha na leitura do Sensor DHT11");
+    return;
+  }
 
- Serial.print("Humidity: "); 
- Serial.print(h);
- Serial.print(" %\t");
- Serial.print("Temperature: "); 
- Serial.print(t);
- Serial.print(" *C ");
- Serial.print(f);
- Serial.print(" *F\t");
- Serial.print("Heat index: ");
- Serial.print(hi);
- Serial.println(" *F");
+  Serial.print("Humidade: "); 
+  Serial.print(h);
+  Serial.print(" %\t");
+  Serial.print("Temperatura: "); 
+  Serial.print(t);
+  Serial.println(" *C ");
+
+  //comando = "python /home/pi/create_html_dht11.py ok " + temperatura + " " + umidade + " > /dev/ttyGS0"; // String com o comando para execução no system
+  //cmd = comando.c_str(); // convertendo os dados para contante char;
+  //system(comando.buffer);
+    
 }

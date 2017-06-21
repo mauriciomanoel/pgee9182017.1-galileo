@@ -8,7 +8,7 @@ import sys
 # sys.argv[3] # umidade
 
 def gravar_arquivo(texto):
-        arq = open('/var/www/html/dht11.html', 'w');
+        arq = open('/www/pages/index.html', 'w');
         arq.write(texto);
         arq.close();
 
