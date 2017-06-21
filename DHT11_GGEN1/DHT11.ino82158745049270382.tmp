@@ -1,0 +1,39 @@
+#include "DHT.h"
+ 
+#define DHTPIN A1 // Pino que estamos conectado
+#define DHTTYPE DHT11 // Modelo do Sensor
+ 
+DHT dht(DHTPIN, DHTTYPE);
+String comando;
+ 
+void setup() 
+{
+  Serial.begin(9600);
+  dht.begin();
+  delay(1000); //Delay para o início da execução do programa
+}
+ 
+void loop() 
+{
+  // Carregando os valores 
+  float h = dht.readHumidity();
+  float t = dht.readTemperature();
+  // testa se retorno é valido, caso contrário algo está errado.
+  if (isnan(t) || isnan(h)) 
+  {
+    Serial.println("Falha ao ler o sensor ");
+    delay(2000); //Delay de dois segundos entre as leituras da informação
+  } 
+  else
+  {
+    Serial.print("Temperatura: ");
+    Serial.print(t);
+    Serial.println(" *C");
+    Serial.print("Umidade: ");
+    Serial.print(h);
+    Serial.print(" %t");
+    comando = "ok;" + h + t;
+    Serial.print(" comando");
+    delay(2000); //Delay de dois segundos entre as leituras da informação
+  }
+}
