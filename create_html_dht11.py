@@ -21,7 +21,7 @@ if len(sys.argv) >= 3:
 		dados = "Sistema indispon&iacute;vel. Por favor tente mais tarde.";
 
 	# Gerando o HTML
-	html = '<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta http-equiv="refresh" content="3;url=dht11.html"><title>Galileo + Sensor DHT11</title></head><body><div class="container"><div class="starter-template" style="text-align: center;"><h2>Atualizado a cada 3 segundos</h2><p class="lead">';
+	html = '<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta http-equiv="refresh" content="3;url=index.html"><title>Galileo + Sensor DHT11</title></head><body><div class="container"><div class="starter-template" style="text-align: center;"><h2>Atualizado a cada 3 segundos</h2><p class="lead">';
 	html += dados;
 	html += '</p></div></div><link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"></body></html>';
 
