@@ -34,9 +34,11 @@ void loop() {
   // Check if any reads failed and exit early (to try again).
   if (isnan(h) || isnan(t)) {
     Serial.println("Falha na leitura do Sensor DHT11");
+    updateSystem("nok", "0", "0");
     return;
   }
 
+  // Conversão de float para char
   sprintf(umidade, "%2.0f", h);
   sprintf(temperatura, "%2.0f", t);
   
@@ -47,9 +49,13 @@ void loop() {
   Serial.print(umidade);
   Serial.println("%\t");
   
+  updateSystem("ok", temperatura, umidade);
+}
 
-  comando = "./home/root/pgee9182017.1-galileo/create_html_dht11.py ok " + String(temperatura) + " " + String(umidade) + " > /dev/ttyGS0"; // String com o comando para execução no system  
+// Método responsável por enviar os dados para o SO da Galileo Gen 2
+void updateSystem(String status, char temperatura[], char umidade[]) {
+  String comando = "./home/root/pgee9182017.1-galileo/create_html_dht11.py " + status + " " + String(temperatura) + " " + String(umidade) + " > /dev/ttyGS0"; // String com o comando para execução no system  
   Serial.println(comando);
   system(comando.buffer);
-    
 }
+
