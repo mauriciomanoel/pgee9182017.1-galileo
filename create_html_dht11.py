@@ -16,7 +16,7 @@ if len(sys.argv) >= 3:
 
 	# Validando os parâmetros
 	if (sys.argv[1] == "ok"):
-		dados = "Temperatura: " + sys.argv[2] + " Umidade: " + sys.argv[3];
+		dados = "Temperatura: " + sys.argv[2] + "°C <br> Umidade: " + sys.argv[3] + "%";
 	else:
 		dados = "Sistema indispon&iacute;vel. Por favor tente mais tarde.";
 

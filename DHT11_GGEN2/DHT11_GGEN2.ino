@@ -13,8 +13,8 @@
 
 DHT dht(DHTIN,DHTOUT, DHTTYPE);
 
-String comando, temperatura, umidade;
-const char* cmd;
+String comando;
+char temperatura[5], umidade[5];
 
 void setup() {
  Serial.begin(9600); 
@@ -25,16 +25,11 @@ void setup() {
 
 void loop() {
   // Aguardando um segundo para medição.
-  delay(1000);
+  delay(2000);
 
   // O tempo de leitura para temperatura ou umidade leva cerca de 250 milissegundos!  
   float h = dht.readHumidity(); // leitura da humidade  
   float t = dht.readTemperature(); // leitura da temperatura em celsius (Para F, passar como parâmetro true);
-
-  //temperatura = String(t);
-  //umidade = String(h);
-  temperatura = String('t, 2');
-  umidade = String('h, 2');
     
   // Check if any reads failed and exit early (to try again).
   if (isnan(h) || isnan(t)) {
@@ -42,15 +37,19 @@ void loop() {
     return;
   }
 
-  Serial.print("Humidade: "); 
-  Serial.print(h);
-  Serial.print(" %\t");
+  sprintf(umidade, "%2.0f", h);
+  sprintf(temperatura, "%2.0f", t);
+  
   Serial.print("Temperatura: "); 
-  Serial.print(t);
-  Serial.println(" *C ");
+  Serial.print(temperatura);
+  Serial.print("*C ");  
+  Serial.print("Humidade: "); 
+  Serial.print(umidade);
+  Serial.println("%\t");
+  
 
-  //comando = "python /home/pi/create_html_dht11.py ok " + temperatura + " " + umidade + " > /dev/ttyGS0"; // String com o comando para execução no system
-  //cmd = comando.c_str(); // convertendo os dados para contante char;
-  //system(comando.buffer);
+  comando = "./home/root/pgee9182017.1-galileo/create_html_dht11.py ok " + String(temperatura) + " " + String(umidade) + " > /dev/ttyGS0"; // String com o comando para execução no system  
+  Serial.println(comando);
+  system(comando.buffer);
     
 }
